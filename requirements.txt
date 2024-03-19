@@ -10,3 +10,5 @@ python-ulid
 urllib3
 PyMySQL==1.1.0
 cryptography==38.0.4
+pytest
+pytest-flask
