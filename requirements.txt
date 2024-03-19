@@ -13,3 +13,4 @@ cryptography==38.0.4
 pytest
 pytest-flask
 coverage==4.5.4
+build

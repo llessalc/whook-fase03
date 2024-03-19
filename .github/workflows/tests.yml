@@ -8,11 +8,6 @@ on:
 jobs:
   run_tests:
     runs-on: [ubuntu-latest]
-#    container:
-#      image: docker://repo:tag
-#      env:
-#        T1: t1
-
     
     steps:
       - uses: actions/checkout@v2
@@ -33,3 +28,6 @@ jobs:
       
       - name: Run tests
         run: pytest ./core/app/app_test.py
+      
+      - name: Tests report
+        run: coverage report
