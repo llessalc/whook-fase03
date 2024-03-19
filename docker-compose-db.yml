@@ -1,0 +1,56 @@
+version: "3.8"
+services:
+
+  webhook-db:
+    container_name: webhook-db
+    image: mysql:8
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    logging:
+      options:
+        max-size: 30m
+        max-file: "3"
+    ports:
+      - "33061:3306"
+    environment:
+      TZ: America/Sao_Paulo
+      PGTZ: America/Sao_Paulo
+      MYSQL_DATABASE: webhook-api
+      MYSQL_PASSWORD: /run/secrets/db_pass
+      MYSQL_USER: webhook-api
+      MYSQL_ROOT_PASSWORD: /run/secrets/db_pass
+    volumes:
+      - webhook-db-data:/var/lib/mysql
+    networks:
+      - webhook-db-net
+    secrets:
+      - db_pass
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 10s
+      retries: 10
+
+  webhook-db-admin:
+    image: adminer
+    restart: always
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+    ports:
+      - 33090:8080
+    networks:
+      - webhook-db-net
+
+networks:
+  webhook-db-net:
+    driver: bridge
+
+secrets:
+  db_pass:
+    file: ./docker/db_pass.txt
+  app_secret_key:
+    file: ./docker/app_secret_key.txt
+
+volumes:
+  webhook-db-data: {}
