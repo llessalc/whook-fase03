@@ -1,0 +1,41 @@
+version: "3.8"
+services:
+  webhook-api:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    restart: always
+    logging:
+      options:
+        max-size: 30m
+        max-file: "3"
+    ports:
+      - 5000:5000
+    environment:
+      FLAG_DEBUG: True
+      APP_SECRET_KEY: /run/secrets/app_secret_key
+      CREATE_ENGINE_ECHO: True
+      DB_USER: 'webhook-api'
+      DB_PASSWORD: /run/secrets/db_pass
+      DB_NAME: 'webhook-api'
+      DB_HOST: webhook-db
+      DB_PORT: '3306'
+      PAGAMENTO_CONFIRMA_URL: 'http://localhost:5000/gerenciamento-pagamento/pagamento/confirma/'
+    networks:
+      - webhook-api-net
+      - webhook-api-ext-db-net
+    secrets:
+      - app_secret_key
+
+networks:
+  webhook-api-net:
+    driver: bridge
+  webhook-api-ext-db-net:
+    name: pedidos-webhook-api_webhook-db-net
+    external: true
+
+secrets:
+  db_pass:
+    file: ./docker/db_pass.txt
+  app_secret_key:
+    file: ./docker/app_secret_key.txt

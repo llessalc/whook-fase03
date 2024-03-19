@@ -1,0 +1,12 @@
+requests
+Flask
+Flask-Migrate
+Flask-SQLAlchemy
+flask_wtf
+SQLAlchemy
+Jinja2
+python-dotenv
+python-ulid
+urllib3
+PyMySQL==1.1.0
+cryptography==38.0.4
