@@ -12,3 +12,4 @@ PyMySQL==1.1.0
 cryptography==38.0.4
 pytest
 pytest-flask
+coverage==4.5.4
