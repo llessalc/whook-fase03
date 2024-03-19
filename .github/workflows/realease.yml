@@ -23,10 +23,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Roda tests
-        run: coverage run ./core/app/app_test.py
-      
-      - name: Tests report
-        run: coverage report
+        run: pytest ./core/app/app_test.py
 
   build_and_pub:
     needs: unit-test

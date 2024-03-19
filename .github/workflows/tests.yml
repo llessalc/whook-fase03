@@ -28,6 +28,3 @@ jobs:
       
       - name: Run tests
         run: pytest ./core/app/app_test.py
-      
-      - name: Tests report
-        run: coverage report
